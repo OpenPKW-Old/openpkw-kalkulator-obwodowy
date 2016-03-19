@@ -89,7 +89,7 @@ public class TerritoriaServiceImpl implements TerritorialService{
                             if (communityFind.get().getCountyCollection() ==null)
                                 communityFind.get().setCountyCollection(new ArrayList<>());
 
-                            communityFind.get().getCountyCollection().add(new County(gmiIn,nazwa));
+                            communityFind.get().getCountyCollection().add(new County(gmiIn,nazwa,communityFind.get()));
                         }
                     }
                 }
@@ -106,7 +106,7 @@ public class TerritoriaServiceImpl implements TerritorialService{
                         if (provinceFind.get().getCommunityCollection()==null)
                             provinceFind.get().setCommunityCollection(new ArrayList<>());
 
-                        provinceFind.get().getCommunityCollection().add(new Community(powIn,nazwa));
+                        provinceFind.get().getCommunityCollection().add(new Community(powIn,nazwa,provinceFind.get()));
                     }
                 }
             }

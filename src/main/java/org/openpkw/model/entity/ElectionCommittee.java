@@ -18,7 +18,7 @@ public class ElectionCommittee {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeId")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection = new ArrayList<>();
 
     public Long getId() {

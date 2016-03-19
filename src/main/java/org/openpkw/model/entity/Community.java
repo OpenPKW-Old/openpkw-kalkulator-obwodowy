@@ -74,9 +74,10 @@ public class Community {
     {
 
     }
-    public Community (String code , String name)
+    public Community (String code , String name,Province province)
     {
         this.code= code;
         this.name = name;
+        this.province = province;
     }
 }
