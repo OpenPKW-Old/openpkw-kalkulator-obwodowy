@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class Main {
+public class MainController {
 
     @RequestMapping("/main")
     public String showRestaurantPreferences(Model model) {
