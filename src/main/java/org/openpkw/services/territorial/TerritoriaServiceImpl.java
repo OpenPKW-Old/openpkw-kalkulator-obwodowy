@@ -34,6 +34,30 @@ public class TerritoriaServiceImpl implements TerritorialService{
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse( this.getClass().getResourceAsStream(territorialFile));
-        //doc.getElementsByTagName("catalog").item(0)
+        NodeList nodeListRoot = (((Element)doc.getElementsByTagName("catalog").item(0)).getElementsByTagName("row"));
+        for (int i=0 ; i<nodeListRoot.getLength();i++)
+        {
+            String woj = null;
+            String gmi= null;
+            String pow = null;
+            String nazwa = null;
+            Element elementRoot = (Element) nodeListRoot.item(i);
+            NodeList nodeList= elementRoot.getElementsByTagName("col");
+            for (int j=0;j<nodeList.getLength();j++)
+            {
+                Element element = (Element)nodeList.item(j);
+                if (element.getAttribute("name").equals("WOJ"))
+                    woj = element.getTextContent();
+                if (element.getAttribute("name").equals("GMI"))
+                    gmi = element.getTextContent();
+
+                if (element.getAttribute("name").equals("POW"))
+                    pow = element.getTextContent();
+
+                if (element.getAttribute("name").equals("NAZWA"))
+                    nazwa = element.getTextContent();
+            }
+        }
+
     }
 }
