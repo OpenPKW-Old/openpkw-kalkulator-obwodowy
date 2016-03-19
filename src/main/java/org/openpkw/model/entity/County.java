@@ -58,6 +58,11 @@ public class County {
         this.community = community;
     }
 
+    public County ()
+    {
+
+    }
+
     public County (String code , String name)
     {
         this.code= code;

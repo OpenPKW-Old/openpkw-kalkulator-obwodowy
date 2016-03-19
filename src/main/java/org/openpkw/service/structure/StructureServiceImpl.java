@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.openpkw.model.entity.*;
 import org.openpkw.model.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Optional;
 /**
  * Created by Remigiusz.Mrozek on 2016-03-19.
  */
+@Service
 public class StructureServiceImpl implements StructureService {
 
     @Autowired
