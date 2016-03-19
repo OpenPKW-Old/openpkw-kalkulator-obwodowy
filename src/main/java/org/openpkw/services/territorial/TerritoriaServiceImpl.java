@@ -40,6 +40,7 @@ public class TerritoriaServiceImpl implements TerritorialService{
 
     @Override
     public void initTerritorialService() throws Exception {
+        provinceRepository.deleteAll();
         ArrayList<Province> provinceList = new ArrayList<Province>();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

@@ -1,6 +1,7 @@
 package org.openpkw.controllers;
 
 import org.openpkw.controllers.dto.InitResult;
+import org.openpkw.service.structure.StructureService;
 import org.openpkw.services.territorial.TerritorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +24,16 @@ public class InitController {
     @Autowired
     private TerritorialService territorialService;
 
+    @Autowired
+    private StructureService structureService;
+
     @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InitResult> init()
     {
         ResponseEntity<InitResult> result;
         try {
             territorialService.initTerritorialService();
+            structureService.initStructureService();
             result = new ResponseEntity<>(new InitResult(false,null), HttpStatus.OK);
         } catch(Exception ex)
         {
