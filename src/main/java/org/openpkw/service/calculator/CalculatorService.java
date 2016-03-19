@@ -1,5 +1,6 @@
 package org.openpkw.service.calculator;
 
+import org.openpkw.controllers.dto.CommiteeResultRow;
 import org.openpkw.controllers.dto.TerritorialResultRow;
 import org.openpkw.model.entity.Community;
 import org.openpkw.model.entity.County;
@@ -20,5 +21,6 @@ public interface CalculatorService  {
     List<TerritorialResultRow> getProvinces();
     List<TerritorialResultRow> getComuties(String provinceCode);
     List<TerritorialResultRow> getCounties(String provinceCode, String communityCode);
+    List<CommiteeResultRow> getCommitee(String provinceCode, String communityCode, String countyCode);
 
 }

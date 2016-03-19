@@ -1,9 +1,11 @@
 package org.openpkw.service.calculator;
 
+import org.openpkw.controllers.dto.CommiteeResultRow;
 import org.openpkw.controllers.dto.TerritorialResultRow;
 import org.openpkw.model.entity.Community;
 import org.openpkw.model.entity.County;
 import org.openpkw.model.entity.Province;
+import org.openpkw.model.repositories.CalculatorRepository;
 import org.openpkw.model.repositories.CommunityRepository;
 import org.openpkw.model.repositories.CountyRepository;
 import org.openpkw.model.repositories.ProvinceRepository;
@@ -27,6 +29,9 @@ public class CalculatorServiceImpl  implements  CalculatorService {
 
     @Autowired
     ProvinceRepository provinceRepository;
+
+    @Autowired
+    CalculatorRepository calculatorRepository;
 
 
     public List<TerritorialResultRow> getProvinces()
@@ -62,4 +67,14 @@ public class CalculatorServiceImpl  implements  CalculatorService {
         }
         return territorialResults;
     }
+
+    public List<CommiteeResultRow> getCommitee(String provinceCode, String communityCode, String countyCode)
+    {
+        List<CommiteeResultRow> commiteeResults;
+
+        commiteeResults = calculatorRepository.getCommitee(provinceCode, communityCode, countyCode);
+
+        return commiteeResults;
+    }
+
 }

@@ -1,5 +1,6 @@
 package org.openpkw.controllers;
 
+import org.openpkw.controllers.dto.CommiteeResultRow;
 import org.openpkw.controllers.dto.Result;
 import org.openpkw.controllers.dto.TerritorialResultRow;
 import org.openpkw.service.calculator.CalculatorService;
@@ -62,20 +63,29 @@ public class CalculatorController {
 
 
     @RequestMapping(value = "/counties", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Result<TerritorialResultRow>> getCounties(@RequestParam("provinceCode") String provinceCode, @RequestParam("communityCode") String communityCode)
-    {
+    public ResponseEntity<Result<TerritorialResultRow>> getCounties(@RequestParam("provinceCode") String provinceCode, @RequestParam("communityCode") String communityCode) {
         ResponseEntity<Result<TerritorialResultRow>> result;
         try {
-            List<TerritorialResultRow> provinceList= calculatorService.getCounties(provinceCode,communityCode);
+            List<TerritorialResultRow> provinceList = calculatorService.getCounties(provinceCode, communityCode);
             result = new ResponseEntity<>(new Result<>(true, null, provinceList), HttpStatus.OK);
-        } catch(Exception ex)
-        {
+        } catch (Exception ex) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             ex.printStackTrace(pw);
-            result = new ResponseEntity<>(new Result<>(false,sw.toString(),null), HttpStatus.NOT_FOUND);
+            result = new ResponseEntity<>(new Result<>(false, sw.toString(), null), HttpStatus.NOT_FOUND);
 
         }
+        return result;
+    }
+
+    @RequestMapping(value = "/committee", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Result<CommiteeResultRow>> getComitee(@RequestParam("provinceCode") String provinceCode, @RequestParam("communityCode") String communityCode, @RequestParam("countyCode") String countyCode)
+    {
+        ResponseEntity<Result<CommiteeResultRow>> result;
+
+        List<CommiteeResultRow> commiteeList = calculatorService.getCommitee(provinceCode, communityCode, countyCode);
+        result = new ResponseEntity<>(new Result<>(true, null, commiteeList), HttpStatus.OK);
+
         return result;
     }
 
