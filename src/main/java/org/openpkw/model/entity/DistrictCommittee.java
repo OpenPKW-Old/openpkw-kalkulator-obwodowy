@@ -29,6 +29,9 @@ public class DistrictCommittee {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
 
+    @Column(name = "CITY", columnDefinition = "TEXT")
+    private String city;
+
     @Column(name = "ADDRESS", columnDefinition = "TEXT")
     private String address;
 
@@ -62,6 +65,14 @@ public class DistrictCommittee {
 
     public void setPeripheralCommitteeCollection(Collection<PeripheralCommittee> peripheralCommitteeCollection) {
         this.peripheralCommitteeCollection = peripheralCommitteeCollection;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getAddress() {
