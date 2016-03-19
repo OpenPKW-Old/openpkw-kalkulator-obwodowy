@@ -56,4 +56,15 @@ public class Province {
     public void setCommunityCollection(Collection<Community> communityCollection) {
         this.communityCollection = communityCollection;
     }
+
+    public Province()
+    {
+
+    }
+
+    public Province (String code , String name)
+    {
+        this.code= code;
+        this.name = name;
+    }
 }
