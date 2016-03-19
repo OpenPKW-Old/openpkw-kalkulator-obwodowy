@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * Created by mrozi on 3/19/2016.
  */
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InitController {
 
     @Autowired
-    TerritorialService territorialService;
+    private TerritorialService territorialService;
 
     @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InitResult> init()
@@ -29,7 +32,11 @@ public class InitController {
             result = new ResponseEntity<>(new InitResult(false,null), HttpStatus.OK);
         } catch(Exception ex)
         {
-            result = new ResponseEntity<>(new InitResult(false,ex.toString()), HttpStatus.NOT_FOUND);
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ex.printStackTrace(pw);
+            result = new ResponseEntity<>(new InitResult(false,sw.toString()), HttpStatus.NOT_FOUND);
+
         }
         return result;
     }

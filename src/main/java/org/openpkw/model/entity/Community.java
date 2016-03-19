@@ -69,4 +69,14 @@ public class Community {
     public void setCountyCollection(Collection<County> countyCollection) {
         this.countyCollection = countyCollection;
     }
+
+    public Community()
+    {
+
+    }
+    public Community (String code , String name)
+    {
+        this.code= code;
+        this.name = name;
+    }
 }

@@ -1,5 +1,7 @@
 package org.openpkw.services.territorial;
 
+import org.openpkw.model.entity.Community;
+import org.openpkw.model.entity.County;
 import org.openpkw.model.entity.Province;
 import org.openpkw.model.repositories.CommunityRepository;
 import org.openpkw.model.repositories.CountyRepository;
@@ -14,6 +16,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by mrozi on 3/19/2016.
@@ -65,27 +69,60 @@ public class TerritoriaServiceImpl implements TerritorialService{
 
             }
 
-            boolean isGmi = woj!=null && pow !=null && gmi!=null;
-            boolean isPow = woj!=null && pow!=null && !isGmi;
-            boolean isWoj = woj!=null && !isPow;
+            boolean isGmi = (woj!=null && !woj.equals("")) && (pow !=null && !pow.equals("")) &&( gmi!=null && !gmi.equals(""));
+            boolean isPow = (woj!=null && !woj.equals("")) && (pow !=null && !pow.equals("")) && !isGmi;
+            boolean isWoj = (woj!=null && !woj.equals("")) && !isPow;
             if (isGmi)
             {
+                String wojIn = woj;
+                String powIn = pow;
+                String gmiIn = gmi;
+                Optional<Province> provinceFind = provinceList.stream().filter(a->a.getCode().equals(wojIn)).findFirst();
+                if (provinceFind.isPresent())
+                {
+                    Optional<Community> communityFind = provinceFind.get().getCommunityCollection().stream().filter(a->a.getCode().equals(powIn)).findFirst();
+                    if (communityFind.isPresent())
+                    {
+                        if (communityFind.get().getCountyCollection()==null || !communityFind.get().getCountyCollection().stream().filter(a->a.getCode().equals(powIn)).findFirst().isPresent())
+                        {
+                            if (communityFind.get().getCountyCollection() ==null)
+                                communityFind.get().setCountyCollection(new ArrayList<>());
 
+                            communityFind.get().getCountyCollection().add(new County(gmiIn,nazwa));
+                        }
+                    }
+                }
             }
             if (isPow)
             {
+                String wojIn = woj;
+                String powIn = pow;
+                Optional<Province> provinceFind = provinceList.stream().filter(a->a.getCode().equals(wojIn)).findFirst();
+                if (provinceFind.isPresent())
+                {
+                    if (provinceFind.get().getCommunityCollection()==null || !provinceFind.get().getCommunityCollection().stream().filter(a->a.getCode().equals(powIn)).findFirst().isPresent())
+                    {
+                        if (provinceFind.get().getCommunityCollection()==null)
+                            provinceFind.get().setCommunityCollection(new ArrayList<>());
 
+                        provinceFind.get().getCommunityCollection().add(new Community(powIn,nazwa));
+                    }
+                }
             }
 
             if (isWoj)
             {
-                if (!provinceList.stream().filter(a->a.getCode().equals("")).findFirst().isPresent())
+                String wojIn = woj;
+                if (!provinceList.stream().filter(a->a.getCode().equals(wojIn)).findFirst().isPresent())
                 {
-                    provinceList.add(new Province(woj,nazwa));
+                    provinceList.add(new Province(wojIn,nazwa));
                 }
             }
 
         }
+
+        for (Province province: provinceList)
+            provinceRepository.save(province);
 
     }
 }
